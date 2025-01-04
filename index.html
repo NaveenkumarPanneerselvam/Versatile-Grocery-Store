@@ -1,0 +1,1777 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Versatile Grocery Store</title>
+    <style>
+      *{
+        margin: 0%;
+        padding: 0%;
+      }
+        .dropdown-menu {
+            right: 0;
+            left:auto;
+            min-width: 450px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        nav.small{
+            border-top: 2px solid black;
+            border-bottom: 2px solid black;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            height: 30px;
+            width: 100%;
+            background-color:white;
+            font-size: large;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            
+            }
+            .AA:hover{
+            background-color:white;
+            color: red;
+
+          }
+          button.add{
+            height: 30px;
+            width: 85%;
+            border-radius: 10px;
+            color: red;
+            border: 1px solid red;
+            font-weight: bold;
+          }
+          button.add:hover{
+            background-color: red;
+            color: white;
+          }
+          .popout-image{
+            width: 400px;
+            transition: transform 0.3s ease;
+          }
+          .popout-image:hover {
+            transform: scale(1.08);
+          }
+
+          .footer {
+            background-color:#332D2D;
+            color:white;
+            text-align:left;
+            justify-content: center;
+            width: 100%;
+            height: 400px;
+            font-size: 20px;
+            padding: 4px 4px 4px 0px;
+            display: flex;
+          }
+          .links {
+            list-style-type: none;
+            padding: 0;
+           
+          }
+
+          .links li {
+            display: inline-block;
+            margin: 0 15px; 
+          }
+
+          .links a {
+            color:white;
+            text-decoration: none;
+          }
+
+          .links a:hover {
+            text-decoration: underline; 
+          }
+
+          p.p{
+          text-align:left;
+          font-size:x-large;
+          font-weight: bold;
+          } 
+          
+          div.mfoot2{
+              padding-left: 100px;
+          }
+          div.mfoot3{
+              padding-left: 100px;
+              margin-top: 20px;
+          }
+
+          .sign{
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+          }
+          /* Floating Button Styles */
+#backToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none; /* Hidden by default */
+    font-size: 18px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50%;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#backToTopBtn:hover {
+    background-color: #333;
+}
+
+          
+
+
+         
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+        <div class="container-fluid">
+          
+            <div class="d-flex align-items-center w-100">
+                <a class="navbar-brand" href="./index.html"><img src="./Sources/versatile-grocery-stores-high-resolution-logo-transparent.png" alt="Logo" height="80px" width="80px" title="Logo"></a>
+
+                
+                <form class="d-flex flex-grow-1 mx-3">
+                    <input class="form-control" type="search" placeholder="Search for Products" aria-label="Search" style="border: 2px solid black; border-radius: 10px;">
+                </form>
+
+                <button type="button" class="btn btn-secondary btn-sm me-3" style="border: 1px solid black; background-color:white; color: black; font-weight: bold;" data-bs-toggle="modal" data-bs-target="#cartModal" title="View Cart">
+                  <i class="fa-solid fa-cart-shopping" style="color: #000000;"></i>&nbsp;&nbsp;View Cart (<span id="cart-count">0</span>)
+              </button>
+
+              <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul id="cart-items">
+                                <!-- Cart items will be dynamically added here -->
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                          <div>Total: ₹<span id="total-price">0.00</span></div>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Save for Later</button>
+                          <button type="button" class="btn btn-primary" onclick="checkout()">Checkout</button>
+                      </div>
+                      </div>
+                </div>
+            </div>
+
+
+                
+
+                <button type="button" class="btn btn-secondary btn-sm me-3" style="border: 1px solid black; background-color:white; color: black; font-weight: bold;" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Select Location">
+                    <i class="fa-regular fa-compass"></i>&nbsp;&nbsp;Select Location
+                </button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Select a location for delivery</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Choose your address location to see product availability and delivery options
+                      </div>
+                      <div class="modal-body">
+                        <input type="text" placeholder="&nbsp;Search for area or street name" style="width: 100%;border: 1px solid green; border-radius: 5px; height: 35px;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: 1px solid black; background-color:white; color: black; font-weight: bold;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
+                        Login / Sign Up
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <form class="px-4 py-3">
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormEmail1" class="form-label"><b>Email address</b></label>
+                                <input type="email" style="border: 1px solid;" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormPassword1" class="form-label"><b>Password</b></label>
+                                <input type="password" style="border: 1px solid;" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password" required>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" style="border: 1px solid;" class="form-check-input" id="dropdownCheck">
+                                    <label class="form-check-label" for="dropdownCheck">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+                            <a href="./index.html" target="_blank" style="border: 2px solid black; border-radius: 10px; text-decoration: none; color: blue; font-weight: bold; padding-top: 2px; padding-bottom: 2px;">&nbsp;&nbsp;Sign in&nbsp;&nbsp;</a>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">New User?</a>
+                            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Sign Up" style="border: 2px solid black; border-radius: 10px; text-decoration: none; color: blue; font-weight: bold; padding-top: 2px; padding-bottom: 2px;margin-left: 15px;">&nbsp;Sign Up&nbsp;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Sign Up</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                <label for="name">Name</label>
+                <input class="sign" type="text" name="name" id="name" placeholder="Enter your Name" required><br><br>
+                
+                <label for="Email">E-mail</label>
+                <input class="sign" type="email" Name="email" id="email" placeholder="Enter your Mail Id" required><br><br>
+    
+                <label for="password">Password</label>
+                <input class="sign" type="password" name="password" id="password" placeholder="Enter your Password" required><br><br>
+    
+                <label for="confirm-password">Confirm Password</label>
+                <input class="sign" type="password" name="confirm-password" id="confirm-password" placeholder="Enter your Password" required><br><br>
+    
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Register</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <nav class="small">
+      <li><a class="AA" href="#Vegetables" style="text-decoration:none;" title="Vegetables"><b>&nbsp;&nbsp;<i class="fa-solid fa-pepper-hot" style="color: #0d6efd;"></i>&nbsp;Vegetables&nbsp;&nbsp;</b></a></li>
+      <li><a class="AA" href="#Dairyproducts" style="text-decoration:none;" title="Dairy Products"><b>&nbsp;&nbsp;<i class="fa-solid fa-cow" style="color: #0d6efd;"></i>&nbsp;Dairy Products&nbsp;&nbsp;</b></a></li>
+      <li><a class="AA" href="#Fruits" style="text-decoration:none;" title="Fruits"><b>&nbsp;&nbsp;<i class="fa-solid fa-apple-whole" style="color: #0d6efd;"></i>&nbsp;Fruits&nbsp;&nbsp;</b></a></li>
+      <li><a class="AA" href="#Beverages" style="text-decoration:none;" title="Beverages"><b>&nbsp;&nbsp;<i class="fa-solid fa-wine-glass" style="color: #0d6efd;"></i>&nbsp;Beverages&nbsp;&nbsp;</b></a></li>
+      <li><a class="AA" href="#Snacks" style="text-decoration:none;" title="Snacks"><b>&nbsp;&nbsp;<i class="fa-solid fa-cookie-bite" style="color: #0d6efd;"></i>&nbsp;Snacks&nbsp;&nbsp;</b></a></li>
+      <li><a class="AA" href="#Cleaning And Laundry" style="text-decoration:none;" title="Cleaning and Laundry"><b>&nbsp;&nbsp;<i class="fa-solid fa-jug-detergent" style="color: #0d6efd;"></i>&nbsp;Cleaning and Laundry&nbsp;&nbsp;</b></a></li>
+    </nav>
+
+    
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./Sources/slide 4.png" class="d-block w-100" alt="Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="./Sources/slide 5.png" class="d-block w-100" alt="Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="./Sources/slide 3.webp" class="d-block w-100" alt="Slide 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <br><br>
+
+
+    <section id="Vegetables"></section>
+    <h1 style="padding-left: 20px;">Vegetables</h1>
+    <br>
+
+
+  <div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right:10px;"><br>
+    <center><img src="./Sources/Vegetables/Capsicum.webp" class="popout-image" alt="..." title="Capsicum"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Capsicum</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹64</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg1', 'Capsicum', 64)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Vegetables/Carrot.webp" class="popout-image" alt="..." title="Carrot"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Carrot</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹72</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg2', 'Carrot', 72)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Vegetables/Cauliflower.webp" class="popout-image" alt="..." title="Cauliflower"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Cauliflower(small)</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1">1 pc</option>
+            <option value="2">2 pc</option>
+            <option value="5">5 pc</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹55</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg3', 'Cauliflower', 55)" >Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Vegetables/Beetroot.webp" class="popout-image" alt="..." title="Beetroot"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Beetroot</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹24</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg4', 'Beetroot', 24)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Vegetables/Brinjal.webp" class="popout-image" alt="..." title="Brinjal"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Brinjal</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹40</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg5', 'Brinjal', 40)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Vegetables/Broccoli.webp" class="popout-image" alt="..." title="Broccoli"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Broccoli</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1">1 pc (Approx : 250g-500g)</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹50</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg6', 'Broccoli', 54)" >Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Vegetables/Ladiesfinger.webp" class="popout-image" alt="..." title="Ladiesfinger"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Ladiesfinger</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹30</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg7', 'Ladiesfinger', 30)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Vegetables/Tomato.webp" class="popout-image" alt="..." title="Tomato"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Tomato</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹72</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg8', 'Tomato', 72)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Vegetables/Potato.webp" class="popout-image" alt="..." title="Potato"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Potato</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="1 kg">1kg</option>
+          <option value="1/2 kg">500g</option>
+          <option value="1/4 kg">250g</option>
+      </select>
+      <p class="card-text"><br>
+      <b>₹49</b>
+    </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('veg9', 'Potato', 49)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<section id="Dairyproducts"></section>
+    <h1 style="padding-left: 20px;">Dairy Products</h1>
+    <br>
+
+
+    <div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+      <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+        <center><img src="./Sources/Dairy Products/Premium butter.webp" class="popout-image" alt="..." title="Premium butter"></center><br>
+        <div class="card-body">
+          <h5 class="card-title" style="font-weight: bold;">Premium Butter - Pasteurised</h5>
+          <br>
+            <label for="Quantity"></label><br>
+            <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+                <option value="500g">500g</option>
+                <option value="100g">100g</option>
+            </select>
+            <p class="card-text"><br>
+            <b>₹330</b>
+          </p>
+        </div>
+        <div class="card-footer">
+            <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+            <button class="add" title="Add" onclick="addToCart('diary1', 'Premium Butter', 330)">Add</button>
+          </div>
+      </div>
+    
+      <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+        <center><img src="./Sources/Dairy Products/Curd.webp" class="popout-image" alt="..." title="Curd"></center><br>
+        <div class="card-body">
+          <h5 class="card-title" style="font-weight: bold;">Curd</h5>
+          <br>
+            <label for="Quantity"></label><br>
+            <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+                <option value="500ml">500ml</option>
+            </select>
+            <p class="card-text"><br>
+            <b>₹26</b>
+          </p>
+        </div>
+        <div class="card-footer">
+            <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+            <button class="add" title="Add" onclick="addToCart('diary2', 'Curd', 26)">Add</button>
+          </div>
+      </div>
+    
+      <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+        <center><img src="./Sources/Dairy Products/Milk.webp" class="popout-image" alt="..." title="Milk"></center><br>
+        <div class="card-body">
+          <h5 class="card-title" style="font-weight: bold;">Milk</h5>
+          <br>
+            <label for="Quantity"></label><br>
+            <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+                <option value="500ml">500ml</option>
+            </select>
+            <p class="card-text"><br>
+            <b>₹27</b>
+          </p>
+        </div>
+        <div class="card-footer">
+            <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+            <button class="add" title="Add" onclick="addToCart('diary3', 'Milk', 27)">Add</button>
+          </div>
+      </div>
+
+    </div>
+    <br>
+
+      <div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+        <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+          <center><img src="./Sources/Dairy Products/Panneer.webp" class="popout-image" alt="..." title="High Protein Panneer"></center><br>
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight: bold;">High Protein Panneer</h5>
+            <br>
+              <label for="Quantity"></label><br>
+              <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+                  <option value="200g">200g</option>
+              </select>
+              <p class="card-text"><br>
+              <b>₹80</b>
+            </p>
+          </div>
+          <div class="card-footer">
+              <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+              <button class="add" title="Add" onclick="addToCart('diary4', 'High Protein Panneer', 80)">Add</button>
+            </div>
+        </div>
+      
+        <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+          <center><img src="./Sources/Dairy Products/Yogurt.webp" class="popout-image" alt="..." title="Skyr Plain Yogurt"></center><br>
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight: bold;">Skyr Plain Yogurt</h5>
+            <br>
+              <label for="Quantity"></label><br>
+              <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+                  <option value="250g">250g</option>
+                  <option value="100g">100g</option>
+              </select>
+              <p class="card-text"><br>
+              <b>₹70</b>
+            </p>
+          </div>
+          <div class="card-footer">
+              <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+              <button class="add" title="Add" onclick="addToCart('diary5', 'Skyr Plain Yogurt', 70)">Add</button>
+            </div>
+        </div>
+      
+        <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+          <center><img src="./Sources/Dairy Products/Cheese Slices.webp" class="popout-image" alt="..." title="Cheese Slices"></center><br>
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight: bold;">Cheese Slices</h5>
+            <br>
+              <label for="Quantity"></label><br>
+              <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+                  <option value="480g">480g</option>
+                  <option value="200g">200g</option>
+                  <option value="100g">100g</option>
+              </select>
+              <p class="card-text"><br>
+              <b>₹255</b>
+            </p>
+          </div>
+          <div class="card-footer">
+              <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+              <button class="add" title="Add" onclick="addToCart('diary6', 'Cheese Slices', 255)">Add</button>
+            </div>
+        </div>
+      
+      </div>
+      <br>
+
+
+      <section id="Fruits"></section>
+    <h1 style="padding-left: 20px;">Fruits</h1>
+    <br>
+
+
+  <div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right:10px;"><br>
+    <center><img src="./Sources/Fruits/Apple.webp" class="popout-image" alt="..." title="Apple"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Apple</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹220</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit1', 'Apple', 220)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Orange.webp" class="popout-image" alt="..." title="Orange"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Orange</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹340</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit2', 'Orange', 340)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Pomegranate.webp" class="popout-image" alt="..." title="Pomegranate"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Pomegranate</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹265</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit3', 'Pomegranate', 265)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Panneer Grapes.webp" class="popout-image" alt="..." title="Panneer Grapes"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Panneer Grapes</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹98</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit4', 'Panneer Grapes', 98)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Green Grapes.webp" class="popout-image" alt="..." title="Green Grapes"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Green Grapes</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹290</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit5', 'Green Grapes', 290)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Alphonso Mango.webp" class="popout-image" alt="..." title="Alphonso Mango"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Alphonso Mango</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="1 kg">1kg</option>
+          <option value="1/2 kg">500g</option>
+          <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹398</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit6', 'Alphonso Mango', 398)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Banana.webp" class="popout-image" alt="..." title="Banana"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Banana</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹115</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit7', 'Banana', 115)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Papaya.webp" class="popout-image" alt="..." title="Papaya"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Papaya</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1kg</option>
+            <option value="1/2 kg">500g</option>
+            <option value="1/4 kg">250g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹64</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit8', 'Papaya', 64)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Watermelon.webp" class="popout-image" alt="..." title="Watermelon"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Watermelon</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="2.5kg">1pc - 2.5kg</option>
+          <option value="3.8kg">1pc - 3.8kg</option>
+        </select>
+      <p class="card-text"><br>
+      <b>₹101</b>
+    </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit9', 'Watermelon', 101)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Tender Coconut.webp" class="popout-image" alt="..." title="Tender Coconut"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Tender Coconut</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 pc">1 pc</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹65</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit10', 'Tender Coconut', 65)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Kiwi.webp" class="popout-image" alt="..." title="Kiwi"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Kiwi</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="3 pcs">3 pcs - (Approx 220g - 260g)</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹154</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit11', 'Kiwi', 154)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Guava.webp" class="popout-image" alt="..." title="Guava"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Guava</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="1 kg">1kg</option>
+          <option value="1/2 kg">500g</option>
+        </select>
+      <p class="card-text"><br>
+      <b>₹69</b>
+    </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit12', 'Guava', 69)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Avocado.webp" class="popout-image" alt="..." title="Avocado"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Avocado</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 pc">1 pc - (Approx 200g)</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹86</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit13', 'Avocado', 86)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Blueberry.webp" class="popout-image" alt="..." title="Blueberry"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Blueberry</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="125g">125g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹312</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit14', 'Blueberry', 312)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Fruits/Muskmelon.webp" class="popout-image" alt="..." title="Muskmelon"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Muskmelon</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="1pc">1pc - (Approx 500g - 900g)</option>
+          <option value="1/2 kg">500g</option>
+        </select>
+      <p class="card-text"><br>
+      <b>₹69</b>
+    </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('fruit15', 'Muskmelon', 69)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<section id="Beverages"></section>
+    <h1 style="padding-left: 20px;">Beverages</h1>
+    <br>
+
+
+  <div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right:10px;"><br>
+    <center><img src="./Sources/Beverages/Coca cola zero sugar.webp" class="popout-image" alt="..." title="Coca cola Zero Sugar"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Coca cola Zero Sugar</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="750ml">750ml</option>
+            <option value="600ml">600ml</option>
+            <option value="300ml">300ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹32</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('beverage1', 'CocaCola', 32)" >Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Beverages/Sprite Zero Sugar.webp" class="popout-image" alt="..." title="Sprite Zero Sugar"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Sprite Zero Sugar</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="300ml">300ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹32</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('beverage2', 'Sprite', 32)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Beverages/Limca Lemon Flavoured Soft Drink.webp" class="popout-image" alt="..." title="Limca Lemon Flavoured Soft Drink"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Limca Lemon Flavoured</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="2.25L">2.25L</option>
+            <option value="750ml">750ml</option>
+            <option value="600ml">600ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹85</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('beverage3', 'Limca', 85)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Beverages/Orsl Health Drink Apple.webp" class="popout-image" alt="..." title="Orsl Health Drink Apple"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Orsl Health Drink Apple</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="200ml">200ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹40</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('beverage4', 'Orsl Apple Health Drink', 40)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Beverages/Pepsi.webp" class="popout-image" alt="..." title="Pepsi"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Pepsi</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="2.25L">2.25L</option>
+            <option value="750ml">750ml</option>
+            <option value="600ml">600ml</option>
+            <option value="250ml">250ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹89</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('beverage5', 'Pepsi', 89)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Beverages/Mirinda.webp" class="popout-image" alt="..." title="Mirinda"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Mirinda</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="2.25L">2.25L</option>
+          <option value="1.25L">1.25L</option>
+          <option value="750ml">750ml</option>
+          <option value="600ml">600ml</option>
+          <option value="250ml">250ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹92</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('beverage6', 'Mirinda', 92)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Beverages/Lehar Club Soda.webp" class="popout-image" alt="..." title="Lehar Club Soda"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Lehar Club Soda</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="750ml">750ml</option>
+          <option value="600ml">600ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹20</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add"onclick="addToCart('beverage7', 'Lehar Soda', 20)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Beverages/Baron De Bercy Red Non Alchoholic Fruit Wine.webp" class="popout-image" alt="..." title="Baron De Bercy Red Non Alchoholic Fruit Wine"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Non Alchoholic Fruit Wine</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="750ml">750ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹400</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('beverage8', 'Non Alchoholic Fruit Wine', 400)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Beverages/Monster Ultra Energy Drink Zero Sugar.webp" class="popout-image" alt="..." title="Monster Ultra Energy Drink Zero Sugar"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Monster Energy Drink Zero Sugar</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="350ml">350ml</option>
+      </select>
+      <p class="card-text"><br>
+      <b>₹125</b>
+    </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('beverage9', 'Monster Energy Drink', 125)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<section id="Snacks"></section>
+    <h1 style="padding-left: 20px;">Snacks</h1>
+    <br>
+
+
+  <div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right:10px;"><br>
+    <center><img src="./Sources/Snacks/Hot chips - Spicy Potato Chips.webp" class="popout-image" alt="..." title="Hot chips - Spicy Potato Chips"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Hot chips - Spicy Potato Chips</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="100g">100 g</option>
+            <option value="2x100g - Multipack">2x100 g - Multipack</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹36</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack1', 'Potato Chips', 36)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Snacks/Classic Salted Butter Caramel Popcorn.webp" class="popout-image" alt="..." title="Classic Salted Butter Caramel Popcorn"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Classic Salted Butter Caramel Popcorn</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="140 g - Jar">140 g - Jar</option>
+            <option value="60 g - Pouch">60 g - Pouch</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹130</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack2', 'Caramel Popcorn', 130)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Snacks/Hot Chips Masala Fryums Wheels.webp" class="popout-image" alt="..." title="Hot Chips Masala Fryums Wheels"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Hot Chips Masala Fryums Wheels</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="50 g">50 g</option>
+            <option value="2x50 g">2x50 g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹15</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack3', ' Hot Chips Wheels', 15)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Snacks/Britannia GoodDay Cashew Cookies.webp" class="popout-image" alt="..." title="Britannia GoodDay Cashew Cookies"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Britannia GoodDay Cashew Cookies</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 kg">1 kg</option>
+            <option value="200 g">200 g</option>
+            <option value="100 g">100 g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹180</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack4', 'GoodDay', 180)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Snacks/Britannia Little Hearts Biscuits.webp" class="popout-image" alt="..." title="Britannia Little Hearts Biscuits"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Britannia Little Hearts Biscuits</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="75 g">75 g</option>
+            <option value="3x13 g - Multipack">3x13 g - Multipack</option>
+            <option value="3x26 g - Multipack">3x26 g - Multipack</option>
+            <option value="6x13 g - Multipack">6x13 g - Multipack</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹29</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack5', 'Little Hearts Biscuits', 29)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Snacks/Nutrichoice Thin Arrowroot Biscuits.webp" class="popout-image" alt="..." title="Nutrichoice Thin Arrowroot Biscuits"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Nutrichoice Thin Arrowroot Biscuits</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="300 g">300 g</option>
+          <option value="150 g">150 g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹45</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack6', 'Nutrichoice Biscuits', 45)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Snacks/50-50 Maska Chaska.webp" class="popout-image" alt="..." title="50-50 Maska Chaska"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">50-50 Maska Chaska</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="300 g">300 g</option>
+          <option value="105 g">105 g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹84</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack7', '50-50', 84)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Snacks/Peanut Chikki.webp" class="popout-image" alt="..." title="Peanut Chikki"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Peanut Chikki</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="200 g">200 g</option>
+          <option value="100 g">100 g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹85</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack8', 'Peanut Chikki', 85)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Snacks/Mysore Pak.webp" class="popout-image" alt="..." title="Mysore Pak"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Mysore Pak</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="400 g">400 g</option>
+          <option value="200 g">200 g</option>
+      </select>
+      <p class="card-text"><br>
+      <b>₹250</b>
+    </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('snack9', 'Mysore Pak', 250)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<section id="Cleaning And Laundry"></section>
+    <h1 style="padding-left: 20px;">Cleaning And Laundry</h1>
+    <br>
+
+
+  <div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right:10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Dishwash Liquid.webp" class="popout-image" alt="..." title="Dishwash Liquid"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Dishwash Liquid</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="500 ml">500 ml</option>
+            <option value="2 L">2 L</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹74</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('clean1', 'Dishwash Liquid', 74)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Harpic Power Plus Disinfectant Toilet Cleaner.webp" class="popout-image" alt="..." title="Harpic Power Plus Disinfectant Toilet Cleaner"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Harpic Power Plus Disinfectant Toilet Cleaner</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="1 L - (Pack of 2)">1 L - (Pack of 2)</option>
+            <option value="500 ml">500 ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹390</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('clean2', 'Harpic Toilet Cleaner', 390)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Vim Dishwash Bar.webp" class="popout-image" alt="..." title="Vim Dishwash Bar"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Vim Dishwash Bar</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="300 g">300 g</option>
+            <option value="90 g">90 g</option>
+            <option value="60 g">60 g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹32</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('clean3', 'Vim Dishwash Bar', 32)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Dettol Antiseptic Disinfectant Liquid.webp" class="popout-image" alt="..." title="Dettol Antiseptic Disinfectant Liquid"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Dettol Antiseptic Disinfectant Liquid</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="5 L">5 L</option>
+            <option value="1 L">1 L</option>
+            <option value="550 ml">550 ml</option>
+            <option value="250 ml">250 ml</option>
+            <option value="125 ml">125 ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹1990</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('clean4', 'Dettol Antiseptic Liquid', 1990)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Comfort Fabric Conditioner.webp" class="popout-image" alt="..." title="Comfort Fabric Conditioner"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Comfort Fabric Conditioner</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+            <option value="2 L">2 L</option>
+            <option value="860 ml">860 ml</option>
+            <option value="430 ml">430 ml</option>
+            <option value="210 ml">210 ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹386</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('clean5', 'Comfort Fabric Conditioner', 386)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Tide Detergent Washing Powder.webp" class="popout-image" alt="..." title="Tide Detergent Washing Powder"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Tide Detergent Washing Powder</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="12 kg">12 kg</option>
+          <option value="10 kg">10 kg</option>
+          <option value="8 kg">8 kg</option>
+          <option value="5 kg">5 kg</option>
+          <option value="2 kg">2 kg</option>
+          <option value="1 kg">1 kg</option>
+          <option value="500 g">500 g</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹1190</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add"onclick="addToCart('clean6', 'Tide Detergent Washing Powder', 1190)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+
+
+<div class="card-group" style="padding-left: 20px; padding-right: 20px;">
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Domex Disinfectant Toilet Cleaner.webp" class="popout-image" alt="..." title="Domex Disinfectant Toilet Cleaner"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Domex Disinfectant Toilet Cleaner</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="3x1 L - Multipack">3x1 L - Multipack</option>
+          <option value="2x1 L - Multipack">2x1 L - Multipack</option>
+          <option value="1 L">1 L</option>
+          <option value="500 ml">500 ml</option>
+          <option value="250 ml">250 ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹465</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('clean7', 'Domex  Toilet Cleaner', 465)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Surf Excel Matic Front Load Liquid Detergent.webp" class="popout-image" alt="..." title="Surf Excel Matic Front Load Liquid Detergent"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Surf Excel Matic Front Load Liquid Detergent</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="4 L">4 L</option>
+          <option value="3.2 L">3.2 L</option>
+          <option value="2 L">2 L</option>
+          <option value="1 L">1 L</option>
+          <option value="50 ml">50 ml</option>
+        </select>
+        <p class="card-text"><br>
+        <b>₹582</b>
+      </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('clean8', 'Surf Excel Liquid', 582)">Add</button>
+      </div>
+  </div>
+
+  <div class="card" style="padding-left: 10px; padding-right: 10px;"><br>
+    <center><img src="./Sources/Cleaning And Laundry/Scotch Brite Scrubber.webp" class="popout-image" alt="..." title="Scotch Brite Scrubber"></center><br>
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: bold;">Scotch Brite Scrubber</h5>
+      <br>
+        <label for="Quantity"></label><br>
+        <select class="signup" name="communication" id="communication" style="font-weight: bold; width: 100%;height: 35px;border-radius: 10px;">
+          <option value="1 pc - (Set of 2)">1 pc - (Set of 2)</option>
+      </select>
+      <p class="card-text"><br>
+      <b>₹30</b>
+    </p>
+    </div>
+    <div class="card-footer">
+        <button type="" class="btn" style="color: black; border:0.5px solid;" title="Save For Later"><i class="fa-regular fa-bookmark"></i></button>&nbsp;&nbsp;
+        <button class="add" title="Add" onclick="addToCart('clean9', 'Scotch Brite Scrubber', 30)">Add</button>
+      </div>
+  </div>
+
+</div>
+<br>
+<br>
+<br>  
+
+
+<footer class="footer">
+  <div class="mfoot1"><br><br>
+  <p class="p"><span style="padding-left: 10px;">Versatile Grocery Store</span></p>
+  <br>
+  <ul class="links">
+      <li><a href="#">About Us</a></li><br><br>
+      <li><a href="#">Privacy Policy</a></li><br><br>
+      <li><a href="#">Terms and Conditions</a></li><br><br>
+      <li><a href="#">In News</a></li><br><br>
+  </ul>
+</div>
+<div class="mfoot2"><br><br>
+  <p class="p"><span style="padding-left: 10px;">Help</span></p>
+  <br>
+  <ul class="links">
+      <li><a href="#">FAQs</a></li><br><br>
+      <li><a href="#">Contact Us</a></li><br><br>
+      <li><a href="#">Vendor Connect</a></li><br><br>
+  </ul>
+</div>
+<div class="mfoot3"><br>
+  <center>
+  <img src="./Sources/versatile-grocery-stores-high-resolution-logo-transparent.png" alt="" width="100px" height="100px" title="logo"><br>
+  <p>A<span style="font-weight: bolder;padding-left: 8px;padding-right: 8px;">Versatile</span>Enterprise</p>
+  <img src="./Sources/playstore.png" alt="" title="Playstore">
+  <img src="./Sources/appstore.png" alt="" title="Appstore"><br><br>
+  <i class="fa-brands fa-facebook-f" title="Facebook" style="color: #ffffff;"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa-brands fa-twitter" title="Twitter" style="color: #ffffff;"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa-brands fa-instagram" title="Instagram" style="color: #ffffff;"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa-brands fa-pinterest-p" title="Pinterest" style="color: #ffffff;"></i></center>
+</div>
+</footer>
+<div style="background-color: black; height: 30px;">
+  <center><p style="color: white;">Copyright © 2023-2025 Versatile Grocery Stores Pvt Ltd</p></center>
+</div>
+<!-- Floating Back to Top Button -->
+<button onclick="scrollToTop()" id="backToTopBtn" title="Go to top">↑</button>
+
+</body>
+</html>
+
+
+
+<script>
+// Initialize cart on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+    renderCartItems();
+});
+
+// Function to add an item to the cart
+function addToCart(id, name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    let item = cart.find(item => item.id === id);
+    if (item) {
+        item.quantity += 1; // Increase quantity if item exists
+    } else {
+        cart.push({ id, name, price, quantity: 1 }); // Add new item
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    renderCartItems(); // Immediately refresh the cart modal content
+}
+
+// Update cart count in the navbar
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let count = cart.reduce((total, item) => total + item.quantity, 0);
+    document.getElementById('cart-count').textContent = count;
+}
+
+function renderCartItems() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cartItemsContainer = document.getElementById('cart-items');
+    cartItemsContainer.innerHTML = ''; // Clear current items
+    let totalPrice = 0;
+
+    cart.forEach(item => {
+        // Calculate the price for each item
+        let itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+
+        // Create list item for each cart item
+        let listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <div>
+                ${item.name} - ₹${item.price} x ${item.quantity}
+                <span style="margin-left: 10px;">Total: ₹${itemTotal.toFixed(2)}</span>
+            </div>
+            <div style="margin-top: 5px;">
+                <button onclick="updateQuantity('${item.id}', -1)" style="font-size: 1.2em; margin-right: 10px;">&nbsp;-&nbsp;</button>
+                <button onclick="updateQuantity('${item.id}', 1)" style="font-size: 1.2em;">&nbsp;+&nbsp;</button>
+            </div>
+        `;
+        cartItemsContainer.appendChild(listItem);
+    });
+
+    // Update total price in the modal
+    document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+}
+
+
+// Update item quantity in the cart
+function updateQuantity(id, change) {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    let item = cart.find(item => item.id === id);
+
+    if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+            cart = cart.filter(i => i.id !== id); // Remove item if quantity is zero
+        }
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    renderCartItems(); // Re-render items after updating quantity
+}
+
+// Placeholder function for checkout
+function checkout() {
+    alert('Checking out...');
+    // Clear cart array or localStorage
+    cart = []; // If cart is stored in an array
+    localStorage.removeItem('cart'); // If cart is stored in localStorage
+
+    // Clear the UI
+    document.getElementById('cart-items').innerHTML = ''; // Clear cart modal
+    document.getElementById('cart-count').innerText = '0'; // Reset cart count
+    document.getElementById('total-price').innerText = '0.00'; // Reset total price
+
+    // Optional: Confirmation message or redirect
+    alert('Your cart has been cleared!');
+}
+
+
+// Show the button when the user scrolls down 100px from the top of the document
+window.onscroll = function() {
+    let backToTopBtn = document.getElementById('backToTopBtn');
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        backToTopBtn.style.display = 'block';
+    } else {
+        backToTopBtn.style.display = 'none';
+    }
+};
+
+// Scroll smoothly to the top when the button is clicked
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+
+</script>
+
